@@ -5,29 +5,6 @@ import { Card } from './ui/card';
 import { Button } from './ui/button';
 import { Badge } from './ui/badge';
 
-/**
- * PROJECTS COMPONENT
- * 
- * TO ADD MORE PROJECTS:
- * 1. Add a new project object to the 'projects' array below
- * 2. Each project should have:
- *    - title: Project name
- *    - description: Short description of the project
- *    - technologies: Array of tech stack used
- *    - github: GitHub repository URL
- *    - demo: Live demo URL (optional, set to null if not available)
- *    - image: Project image URL (optional, will show gradient if not provided)
- * 
- * EXAMPLE:
- * {
- *   title: 'My New Project',
- *   description: 'Description of my awesome project',
- *   technologies: ['React', 'Node.js', 'MongoDB'],
- *   github: 'https://github.com/username/project',
- *   demo: 'https://project-demo.com',
- *   image: '/assets/project-image.jpg'
- * }
- */
 
 const Projects = () => {
   const containerVariants = {
@@ -63,9 +40,9 @@ const Projects = () => {
       technologies: ['React.js', 'MongoDB', 'Node.js', 'Express.js', 'Firebase', 'Stripe', 'OAuth'],
       github: 'https://github.com/VyoJ/BookRealm',
       demo: null,
-      image: null, // Will use gradient background
+      image: "/assets/book.png",
     },
-     {
+    {
       title: 'NewsFlix',
       description: [
         'Responsive news portal fetching real-time, daily-updated articles using the external NewsAPI service.',
@@ -82,15 +59,15 @@ const Projects = () => {
     {
       title: 'SecureDiary',
       description: [
-      'Secure personal diary app supporting full CRUD operations with user-specific encrypted data storage across access sessions.',
-      'Implemented authentication using MongoDB, salted password hashing, JWT tokenization, and OAuth login.',
-      'Developed Express.js APIs with middleware , error-handling and Axios-based data operations for smooth editing, updating, and managing entries.'
-    ],
+        'Secure personal diary app supporting full CRUD operations with user-specific encrypted data storage across access sessions.',
+        'Implemented authentication using MongoDB, salted password hashing, JWT tokenization, and OAuth login.',
+        'Developed Express.js APIs with middleware , error-handling and Axios-based data operations for smooth editing, updating, and managing entries.'
+      ],
 
-      technologies: ['React', 'Node.js', 'Express', 'MongoDB', 'JWT' , 'OAuth'],
+      technologies: ['React', 'Node.js', 'Express', 'MongoDB', 'JWT', 'OAuth'],
       github: 'https://github.com/GitWithMithunS/mydiary',
       demo: null,
-      image: null,
+      image: "/assets/diary.jpg",
     },
 
     {
@@ -103,7 +80,7 @@ const Projects = () => {
       technologies: ['Python', 'Google APIs', 'NLP', 'Transformers'],
       github: null,
       demo: null,
-      image: null,
+      image: "/assets/voice.jpg",
     },
     {
       title: 'E-Charge',
@@ -116,7 +93,7 @@ const Projects = () => {
       github: 'https://github.com/GitWithMithunS/E-Charge',
       // demo: 'https://e-charge.netlify.app/',
       demo: 'https://e-charge-beta.netlify.app/',
-      image: null,
+      image: "/assets/e_charge.png",
     },
     {
       title: 'Text Analyzer',
@@ -125,10 +102,10 @@ const Projects = () => {
         'Implemented dark/light mode using useState and useEffect, with toast-based notifications for user feedback.',
         'Used React routing, props, and event handling to manage dynamic UI behavior and deployed the app on Netlify.'
       ],
-      technologies: ['React', 'Bootstrap' , 'React Hooks' , 'Toast Notifications'],
+      technologies: ['React', 'Bootstrap', 'React Hooks', 'Toast Notifications'],
       github: 'https://github.com/GitWithMithunS/Text_analyzer_website',
       demo: 'https://mellifluous-elf-9138e4.netlify.app/',
-      image: null,
+      image: "/assets/text_analyzer.png",
     },
     {
       title: 'Survillance Robot',
@@ -137,10 +114,10 @@ const Projects = () => {
         'Implemented Wi-Fi–based mobile/web control for robot movement and real-time camera feed through a lightweight web interface.',
         'Used an L298N motor driver (H-bridge) to control DC motors, enabling smooth directional movement and reliable robotics operation.'
       ],
-      technologies: ['React', 'Bootstrap' , 'React Hooks' , 'Toast Notifications'],
+      technologies: ['Esp32-CAM', 'Arduino IDE', 'L298N Motor Driver', 'Wi-Fi Streaming'],
       github: null,
       demo: null,
-      image: null,
+      image: "/assets/robot.png",
     },
   ];
 
@@ -229,17 +206,17 @@ const Projects = () => {
                   <div className="p-6 flex flex-col flex-grow">
                     <h3 className="text-2xl font-bold text-white mb-3">{project.title}</h3>
                     {/* <p className="text-gray-300 mb-4 flex-grow leading-relaxed"> */}
-                      {/* {project.description} */}
-                      {/* </p> */}
+                    {/* {project.description} */}
+                    {/* </p> */}
 
-                      <ul className="space-y-2 text-gray-300">
-                        {project.description.map((desc, descIndex) => (
-                          <li key={descIndex} className="flex items-start gap-2 text-sm leading-relaxed">
-                            <span className="text-blue-400 mt-1.5">▹</span>
-                            <span>{desc}</span>
-                          </li>
-                        ))}
-                      </ul>
+                    <ul className="space-y-2 text-gray-300">
+                      {project.description.map((desc, descIndex) => (
+                        <li key={descIndex} className="flex items-start gap-2 text-sm leading-relaxed">
+                          <span className="text-blue-400 mt-1.5">▹</span>
+                          <span>{desc}</span>
+                        </li>
+                      ))}
+                    </ul>
 
 
 

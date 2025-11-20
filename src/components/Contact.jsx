@@ -14,10 +14,12 @@ import {
   DialogTitle,
 } from './ui/dialog';
 import { useToast } from '../hooks/use-toast';
+import emailjs from '@emailjs/browser';
 
 const Contact = () => {
   const { toast } = useToast();
   const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -26,6 +28,11 @@ const Contact = () => {
     message: '',
   });
   const [errors, setErrors] = useState({});
+
+  //  CONFIGURE THESE WITH YOUR EMAILJS CREDENTIALS
+  const EMAILJS_SERVICE_ID = 'service_ucevmmf'; // e.g., 'service_abc123'
+  const EMAILJS_TEMPLATE_ID = 'template_xt4rwhm'; // e.g., 'template_xyz789'
+  const EMAILJS_PUBLIC_KEY = 'cPsieODB4W-AW2mUJ'; // e.g., 'your_public_key_here'
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -96,17 +103,45 @@ const Contact = () => {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (validateForm()) {
+    if (!validateForm()) {
+      toast({
+        title: 'Validation Error',
+        description: 'Please fix the errors in the form.',
+        variant: 'destructive',
+      });
+      return;
+    }
+
+    setIsSubmitting(true);
+
+    try {
+      // Send email using EmailJS
+      const result = await emailjs.send(
+        EMAILJS_SERVICE_ID,
+        EMAILJS_TEMPLATE_ID,
+        {
+          from_name: formData.name,
+          from_email: formData.email,
+          phone: formData.phone || 'Not provided',
+          preferred_date: formData.date || 'Not specified',
+          message: formData.message,
+          to_name: 'Mithun', // Your name
+        },
+        EMAILJS_PUBLIC_KEY
+      );
+
+      console.log('Email sent successfully:', result.text);
+
       // Show success dialog
       setIsDialogOpen(true);
 
       // Show toast notification
       toast({
         title: 'Message Sent!',
-        description: 'Thank you for reaching out. I\'ll get back to you soon!',
+        description: "Thank you for reaching out. I'll get back to you soon!",
       });
 
       // Reset form
@@ -118,12 +153,16 @@ const Contact = () => {
         message: '',
       });
       setErrors({});
-    } else {
+    } catch (error) {
+      console.error('Email send failed:', error);
+      
       toast({
-        title: 'Validation Error',
-        description: 'Please fix the errors in the form.',
+        title: 'Failed to Send',
+        description: 'Something went wrong. Please try again or email me directly.',
         variant: 'destructive',
       });
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -225,6 +264,7 @@ const Contact = () => {
                       type="text"
                       value={formData.name}
                       onChange={handleChange}
+                      disabled={isSubmitting}
                       className={`bg-blue-950/50 border-blue-500/30 text-white placeholder:text-gray-500 focus:border-blue-500 ${
                         errors.name ? 'border-red-500' : ''
                       }`}
@@ -244,6 +284,7 @@ const Contact = () => {
                       type="email"
                       value={formData.email}
                       onChange={handleChange}
+                      disabled={isSubmitting}
                       className={`bg-blue-950/50 border-blue-500/30 text-white placeholder:text-gray-500 focus:border-blue-500 ${
                         errors.email ? 'border-red-500' : ''
                       }`}
@@ -263,6 +304,7 @@ const Contact = () => {
                       type="tel"
                       value={formData.phone}
                       onChange={handleChange}
+                      disabled={isSubmitting}
                       className={`bg-blue-950/50 border-blue-500/30 text-white placeholder:text-gray-500 focus:border-blue-500 ${
                         errors.phone ? 'border-red-500' : ''
                       }`}
@@ -282,6 +324,7 @@ const Contact = () => {
                       type="date"
                       value={formData.date}
                       onChange={handleChange}
+                      disabled={isSubmitting}
                       className="bg-blue-950/50 border-blue-500/30 text-white focus:border-blue-500"
                     />
                   </div>
@@ -296,6 +339,7 @@ const Contact = () => {
                       name="message"
                       value={formData.message}
                       onChange={handleChange}
+                      disabled={isSubmitting}
                       rows={5}
                       className={`bg-blue-950/50 border-blue-500/30 text-white placeholder:text-gray-500 focus:border-blue-500 resize-none ${
                         errors.message ? 'border-red-500' : ''
@@ -311,10 +355,13 @@ const Contact = () => {
                   <Button
                     type="submit"
                     size="lg"
-                    className="w-full bg-blue-600 hover:bg-blue-700 text-white group transition-all duration-300"
+                    disabled={isSubmitting}
+                    className="w-full bg-blue-600 hover:bg-blue-700 text-white group transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
                   >
-                    Send Message
-                    <Send className="ml-2 group-hover:translate-x-1 transition-transform" size={18} />
+                    {isSubmitting ? 'Sending...' : 'Send Message'}
+                    {!isSubmitting && (
+                      <Send className="ml-2 group-hover:translate-x-1 transition-transform" size={18} />
+                    )}
                   </Button>
                 </form>
               </Card>

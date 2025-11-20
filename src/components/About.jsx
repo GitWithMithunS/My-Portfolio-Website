@@ -28,7 +28,7 @@ const About = () => {
     {
       icon: Code2,
       title: 'LeetCode Knight',
-      description: 'Top 3.48% Globally | 1937+ Rating | 600+ Problems Solved',
+      description: 'Top 3.48% Globally | 1937+ Rating | 600+ Problems Solved on Leetcode',
       color: 'text-yellow-400',
     },
     {
@@ -40,7 +40,7 @@ const About = () => {
     {
       icon: Trophy,
       title: 'Global Rank of 1720 at Codolio',
-      description: 'Solved over 1000 question across platforms | 745.12/900 Cumulative-score(combination of DSA , Cp and Development) ',
+      description: 'Solved over 1000+ questions across platforms | 745.12/900 Cumulative-score(combination of DSA , Cp and Development) ',
       color: 'text-blue-400',
     },
     {
